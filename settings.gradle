@@ -8,5 +8,5 @@ dependencyResolutionManagement {
 
     }
 }
-rootProject.name = "kleine"
+rootProject.name = "futbolfit"
 include ':app'
