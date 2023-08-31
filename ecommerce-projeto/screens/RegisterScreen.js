@@ -30,7 +30,7 @@ const RegisterScreen = () => {
 
     // send a POST  request to the backend API to register the user
     axios
-      .post("http://localhost:8000/register", user)
+      .post("http://192.168.1.16:8000/register", user)
       .then((response) => {
         console.log(response);
         Alert.alert(
@@ -48,6 +48,30 @@ const RegisterScreen = () => {
         );
         console.log("registration failed", error);
       });
+      async function loadIncidents() {
+    if (loading) {
+        return;
+    }
+
+    if (total > 0 && incidents.length === total) {
+        return;
+    }
+
+    setLoading(true);
+    try {
+        const response = await api.get("incidents", {
+            params: { page },
+        });
+
+        setIncidents([...incidents, ...response.data]);
+        setTotal(response.headers["x-total-count"]);
+        setPage(page + 1);
+    } catch (err) {
+        console.log('Ocorreu um erro: ', err)
+    }
+    setLoading(false);
+}
+      
   };
   return (
     <SafeAreaView
